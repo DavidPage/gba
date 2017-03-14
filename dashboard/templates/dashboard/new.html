@@ -1,0 +1,13 @@
+{% extends "gba_menu.html" %}
+
+{% block pageHeader %}
+Insert initial bank amount
+{% endblock %}
+
+{% block pageBody %}
+<form method="post" action="{% url 'insertInitialAmount' %}">
+    {% csrf_token %}
+    <p><input name="initialAmount"></p>
+    <p><input type="submit" value="Add!"/></p>
+</form>
+{% endblock %}

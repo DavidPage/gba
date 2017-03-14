@@ -1,0 +1,10 @@
+{% extends 'gba_menu.html' %}
+{% load staticfiles %}
+
+{% block pageBody %}
+
+<h1> Username and / or password incorrect. Please try again!</h1>
+
+<a href="{% url 'login' %}"> login</a>
+
+{% endblock %}

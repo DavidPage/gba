@@ -1,0 +1,24 @@
+{% extends "gba_menu.html" %}
+
+{% block pageHeader %}
+Market
+{% endblock %}
+
+{% block pageBody %}
+<a href="{% url 'newMarket' %}"> Create new market</a><br>
+<h4>All markets untill date</h4>
+<table class="table table-condensed col-md-offset-1" style="width:1000px">
+    {% for market in allMarkets %}
+    <tr>
+        <td> {{ market.market_name }}</td>
+        <td>
+            <a href="{% url 'deleteMarket' market.id %}">
+                Delete
+           <!-- <span class="glyphicon glyphicon-remove" style="cursor: pointer;">
+
+            </span>-->
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+    {% endblock %}

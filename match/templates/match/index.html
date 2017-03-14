@@ -1,0 +1,39 @@
+{% extends "gba_menu.html" %}
+
+{% block pageHeader %}
+Matches
+{% endblock %}
+
+{% block pageBody %}
+<a href="{% url 'new' %}"> Create new match</a><br>
+<h4> Matches until date:</h4>
+<div class="container-fluid col-md-8 ">
+    <table class="table table-condensed col-md-offset-1" style="width:1000px">
+        <tr>
+            <td>id</td>
+            <td>Competition</td>
+            <td>Home Team</td>
+            <td></td>
+            <td>Away Team</td>
+            <td>Date</td>
+            <td></td>
+        </tr>
+        {% for match in allMatches %}
+        <tr>
+            <td>{{ match.id }}</td>
+            <td>{{ match.competition.competition_name }}</td>
+            <td>{{ match.homeTeam }}</td>
+            <td> vs</td>
+            <td>{{ match.awayTeam }}</td>
+            <td>{{ match.match_time }}</td>
+            <td>
+                <a href="{% url 'delete' match.id %}"> Delete
+                   <!-- <span class="glyphicon glyphicon-remove" style="cursor: pointer;">
+
+                    </span>-->
+                </a>
+            </td>
+        </tr>
+</div>
+{% endfor %}
+{% endblock %}

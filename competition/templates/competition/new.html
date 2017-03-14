@@ -1,0 +1,17 @@
+{% extends "gba_menu.html" %}
+
+{% block pageHeader %}
+Create new Competition
+{% endblock %}
+
+{% block pageBody %}
+<form method="post" action="{% url 'insertCompetition' %}">
+    {% csrf_token %}
+    <p>
+        <input name="competitionName">
+    </p>
+    <p>
+        <input type="submit" value="Add!"/>
+    </p>
+</form>
+{% endblock %}

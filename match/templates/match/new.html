@@ -1,0 +1,14 @@
+{% extends "gba_menu.html" %}
+
+{% block pageHeader %}
+Create new Match
+{% endblock %}
+
+{% block pageBody %}
+
+<form method="POST" class="post-form" action="{% url 'insert' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-default">Add match!</button>
+</form>
+{% endblock %}

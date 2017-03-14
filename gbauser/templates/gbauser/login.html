@@ -1,0 +1,19 @@
+{% extends 'gba_menu.html' %}
+{% load staticfiles %}
+
+{% block pageBody %}
+
+<div class="form-group">
+    <h1> Login </h1>
+    <form method="post" action="">
+        {% csrf_token %}
+
+        <label for="username">Your username: </label>
+        <input id="username" type="text" name="username">
+        <br />
+        <label for="password">Your password: </label>
+        <input id="password" type="text" name="password">
+        <input type="submit" value="Login!">
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "gba_menu.html" %}
+
+{% block pageHeader %}
+Create new Market
+{% endblock %}
+
+{% block pageBody %}
+<form method="post" action="{% url 'insertMarket' %}">
+    {% csrf_token %}
+    <input name="marketName">
+    <input type="submit" value="Add new Market!"></input>
+</form>
+{% endblock %}

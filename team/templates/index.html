@@ -1,0 +1,24 @@
+{% extends "gba_menu.html" %}
+
+{% block pageHeader %}
+Teams
+{% endblock %}
+
+{% block pageBody %}
+<div style="margin-top:-35px">
+    <a href="{% url 'newTeam' %}"> Create new team</a><br>
+    <table class="table table-condensed col-md-offset-1" style="width:1000px">
+        {% for team in allTeams %}
+        <tr>
+            <td> {{ team.team_name }}</td>
+            <td>
+                <a href="{% url 'deleteTeam' team.id %}"> Delete
+                <!--    <span class="glyphicon glyphicon-remove" style="cursor: pointer;"/>
+
+                </a>-->
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

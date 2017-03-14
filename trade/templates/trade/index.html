@@ -1,0 +1,124 @@
+{% extends "gba_menu.html" %}
+
+{% block pageHeader %}
+Trades
+{% endblock %}
+
+{% block pageBody %}
+
+<a href="{% url 'newTrade' %}"> Create new trade</a><br>
+
+<div class="btn-group" role="group" aria-label="...">
+    <a class="btn btn-default" href="{% url 'filterByMonth' 1 %}">January </a>
+    <a class="btn btn-default" href="{% url 'filterByMonth' 2 %}">February </a>
+    <a class="btn btn-default" href="{% url 'filterByMonth' 3 %}">March</a>
+    <a class="btn btn-default" href="{% url 'filterByMonth' 4 %}">April</a>
+    <a class="btn btn-default" href="{% url 'filterByMonth' 5 %}">May</a>
+    <a class="btn btn-default" href="{% url 'filterByMonth' 6 %}">June</a>
+    <a class="btn btn-default" href="{% url 'filterByMonth' 7 %}">July</a>
+    <a class="btn btn-default" href="{% url 'filterByMonth' 8 %}">August</a>
+    <a class="btn btn-default" href="{% url 'filterByMonth' 9 %}">September</a>
+    <a class="btn btn-default" href="{% url 'filterByMonth' 10 %}">October</a>
+    <a class="btn btn-default" href="{% url 'filterByMonth' 11 %}">November</a>
+    <a class="btn btn-default" href="{% url 'filterByMonth' 12 %}">December</a>
+</div>
+
+<div>
+        <div style="    width: 100%;
+    float: left;">
+
+    {% if totalOfYear != None %}
+        <h3 style="float:left;padding-right:5px;">Profit and loss of the year: </h3>
+
+        {%if totalOfYear > 0 %}
+           <h3 style="float:left;color:green;">{{ totalOfYear }} €</h3>
+        {% else %}
+            {%if totalOfYear < 0 %}
+                <h3 style="float:left; color:red;">{{ totalOfYear }} €</h3>
+            {% else %}
+                <h3 style="float:left;">{{ totalOfYear }} €</h3>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</div>
+    <div style="    width: 100%;
+    float: left;">
+    {% if totalROIOfYear != None %}
+        <h3 style="clear:left;">ROI of the year: {{ totalROIOfYear |floatformat:-2  }} %</h3>
+    {% endif %}
+</div>
+    <div style="    width: 100%;
+    float: left;">
+
+    {% if totalOfMonth != None  %}
+                <h3 style="float:left;padding-right:5px;">Profit and loss of the month: </h3>
+        {% if totalROIOfMonth > 0 %}
+            <h3 style="color:green;"> {{ totalOfMonth }} €</h3>
+        {% else %}
+            {%if totalROIOfMonth < 0 %}
+                    <h3 style="float:left;color:red;"> {{ totalOfMonth }} €</h3>
+            {% else %}
+                        <h3 style="" >{{ totalOfMonth }} €</h3>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</div>
+    <div style="    width: 100%;
+    float: left;">
+    {% if totalROIOfMonth != None  %}
+                <h3 style="float:left;padding-right:5px;">ROI of the month: </h3>
+        {% if totalROIOfMonth > 0 %}
+            <h3 style="float:left;color:green;"> {{ totalROIOfMonth }} %</h3>
+        {% else %}
+            {%if totalROIOfMonth < 0 %}
+                    <h3 style="float:left; color:red;"> {{ totalROIOfMonth }} %</h3>
+            {% else %}
+                        <h3 style="float:left;" >{{ totalROIOfMonth }} %</h3>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</div>
+</div>
+
+
+<div class="container-fluid col-md-8 " style="clear:left">
+    <table class="table table-condensed col-md-offset-1" style="width:1000px">
+        <tr>
+            <td>Match</td>
+            <td>Market</td>
+            <td>Invested</td>
+            <td>Profit & Loss</td>
+            <td>ROI</td>
+            <td></td>
+            <td>Delete all</td>
+        </tr>
+
+        {% for trade in allTrades %}
+        {% if trade.profitLoss > 0 %}
+        <tr id="{{ trade.id }}" class="success">
+            {% else %}
+            {% if trade.profitLoss < 0 %}
+        <tr id="{{ trade.id }}" class="danger">
+            {% else %}
+        <tr id="{{ trade.id }}" class="active">
+            {% endif %}
+            {% endif %}
+
+            <td>{{trade.match}}</td>
+            <td>{{trade.market}}</td>
+            <td>{{trade.invested}}€</td>
+            <td>{{trade.profitLoss}}€</td>
+            <td>{{trade.divide}}%</td>
+            <td></td>
+            <td><a href="{% url 'deleteTrade' trade.id %}"> Delete
+                <!--<span class="glyphicon glyphicon-remove" style="cursor: pointer;">
+
+                </span>-->
+            </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

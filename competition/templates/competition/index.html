@@ -1,0 +1,23 @@
+{% extends "gba_menu.html" %}
+
+{% block pageHeader %}
+Competitions
+{% endblock %}
+
+{% block pageBody %}
+<div style="margin-top:-35px">
+    <a href="{% url 'newCompetition' %}">Create new competition</a>
+    <table class="table table-condensed col-md-offset-1" style="width:1000px">
+        {% for competition in allCompetitions %}
+        <tr>
+            <td>{{ competition.competition_name }}</td>
+            <td>
+                <a href="{% url 'deleteCompetition' competition.id %}">Delete
+                    <!--<span class="glyphicon glyphicon-remove" style="cursor: pointer;"/>-->
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
