@@ -4,42 +4,40 @@
 Dashboard
 {% endblock %}
 
-
 {% block pageBody%}
 
-
 <div>
- <h3 style=" float:left; padding-right:5px;">Current bank: </h3>
-    {% if totalOfYear > 0 %}
-        <h3 style=" float:left;color:green;"> {{ currentBank |floatformat:-2  }} €€</h3>
-    {% else %}
-        {%if totalOfYear < 0 %}
-                <h3 style="float:left; color:red;">{{ currentBank |floatformat:-2  }}€</h3>
-             {% else %}
-                    <h3 style="float:left" >{{ currentBank |floatformat:-2  }}€</h3>
+    <h3 style=" float:left; padding-right:5px;">Current balance: </h3>
+        {% if totalOfYear > 0 %}
+            <h3 style=" float:left;color:green;"> {{ currentBank |floatformat:-2 }} €</h3>
+        {% else %}
+            {%if totalOfYear < 0 %}
+                <h3 style="float:left; color:red;">{{ currentBank |floatformat:-2 }}€</h3>
+            {% else %}
+                <h3 style="float:left">{{ currentBank |floatformat:-2 }}€</h3>
+            {% endif %}
         {% endif %}
-    {% endif %}
     <h3 style="float:left;clear:both;padding-right:5px;">Profit and loss of the year: </h3>
     {% if totalOfYear > 0 %}
-        <h3 style="float:left;color:green;">{{ totalOfYear }} €</h3>
+    <h3 style="float:left;color:green;">{{ totalOfYear }} €</h3>
     {% else %}
-        {%if totalOfYear < 0 %}
-                <h3 style="float:left; color:red;">{{ totalOfYear }} €</h3>
-             {% else %}
-                    <h3 style="float:left;" >{{ totalOfYear }} €</h3>
-        {% endif %}
+    {%if totalOfYear < 0 %}
+    <h3 style="float:left; color:red;">{{ totalOfYear }} €</h3>
+    {% else %}
+    <h3 style="float:left;">{{ totalOfYear }} €</h3>
+    {% endif %}
     {% endif %}
 
     {% if totalROIOfYear is not null %}
-        <h3 style="clear:left;">ROI of the year: {{ totalROIOfYear |floatformat:-2  }} %</h3>
+    <h3 style="clear:left;">ROI of the year: {{ totalROIOfYear |floatformat:-2 }} %</h3>
     {% else %}
-        <h3 style="clear:left;">ROI of the month: {{ totalROIOfMonth }} %</h3>
+    <h3 style="clear:left;">ROI of the month: {{ totalROIOfMonth }} %</h3>
     {% endif %}
 
 </div>
 
-<canvas id="myChart" width="1200" height="400" ></canvas>
-    <script type="text/javascript">
+<canvas id="myChart" width="1200" height="400"></canvas>
+<script type="text/javascript">
 
 var ctx = document.getElementById("myChart");
 var myChart = Chart.Line(ctx, {
@@ -79,6 +77,7 @@ var myChart = Chart.Line(ctx, {
         }
     }
 });
+
 
 
 </script>
