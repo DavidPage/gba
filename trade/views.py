@@ -13,8 +13,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def trades(request):
-    allTrades = Trade.objects.all()
-    #allTrades = Trade.objects.filter(user=request.user)
+    #allTrades = Trade.objects.all()
+    allTrades = Trade.objects.filter(user=request.user)
 
     totalOfYear = 0
     totalInvestedYear = 0
@@ -23,7 +23,9 @@ def trades(request):
         totalOfYear = totalOfYear + trade.profitLoss
         totalInvestedYear = totalInvestedYear + trade.invested
 
-    totalROIOfYear = float((totalInvestedYear * 100) / totalOfYear)
+    totalROIOfYear = 0
+    if totalOfYear != 0:
+        totalROIOfYear = float((totalInvestedYear * 100) / totalOfYear)
 
     context = {'allTrades': allTrades, 'totalOfYear': totalOfYear, 'totalROIOfYear': totalROIOfYear}
     return render(request, 'trade/index.html', context)
@@ -101,7 +103,8 @@ def insert(request):
     if request.method == "POST":
         form = TradeForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=True)
+            post = form.save(commit=False)
+            post.user = request.user
             post.save()
             return HttpResponseRedirect('/Trade/')
         else:

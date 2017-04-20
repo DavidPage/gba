@@ -31,44 +31,45 @@ def insertInitialAmount(request):
 def index(request):
     print 'dashboard.index'
 
-    allTrades = Trade.objects.all()
+    #allTrades = Trade.objects.all()
+    allTrades = Trade.objects.filter(user=request.user)
 
     # Step 1: Create a DataPool with the data we want to retrieve.
     januaryMatches = Match.objects.filter(match_time__month=1).values('id')
-    januarySum = sumByMonth(Trade.objects.filter(match_id__in=januaryMatches))
+    januarySum = sumByMonth(Trade.objects.filter(user=request.user, match_id__in=januaryMatches))
 
     februaryMatches = Match.objects.filter(match_time__month=2).values('id')
-    februarySum = sumByMonth(Trade.objects.filter(match_id__in=februaryMatches))
+    februarySum = sumByMonth(Trade.objects.filter(user=request.user,match_id__in=februaryMatches))
 
     marchMatches = Match.objects.filter(match_time__month=3).values('id')
-    marchSum = sumByMonth(Trade.objects.filter(match_id__in=marchMatches))
+    marchSum = sumByMonth(Trade.objects.filter(user=request.user,match_id__in=marchMatches))
 
     aprilMatches = Match.objects.filter(match_time__month=4).values('id')
-    aprilSum = sumByMonth(Trade.objects.filter(match_id__in=aprilMatches))
+    aprilSum = sumByMonth(Trade.objects.filter(user=request.user,match_id__in=aprilMatches))
 
     mayMatches = Match.objects.filter(match_time__month=5).values('id')
-    maySum = sumByMonth(Trade.objects.filter(match_id__in=mayMatches))
+    maySum = sumByMonth(Trade.objects.filter(user=request.user,match_id__in=mayMatches))
 
     juneMatches = Match.objects.filter(match_time__month=6).values('id')
-    juneSum = sumByMonth(Trade.objects.filter(match_id__in=juneMatches))
+    juneSum = sumByMonth(Trade.objects.filter(user=request.user,match_id__in=juneMatches))
 
     julyMatches = Match.objects.filter(match_time__month=7).values('id')
-    julySum = sumByMonth(Trade.objects.filter(match_id__in=julyMatches))
+    julySum = sumByMonth(Trade.objects.filter(user=request.user,match_id__in=julyMatches))
 
     augustMatches = Match.objects.filter(match_time__month=8).values('id')
-    augustSum = sumByMonth(Trade.objects.filter(match_id__in=augustMatches))
+    augustSum = sumByMonth(Trade.objects.filter(user=request.user,match_id__in=augustMatches))
 
     septemberMatches = Match.objects.filter(match_time__month=9).values('id')
-    septemberSum = sumByMonth(Trade.objects.filter(match_id__in=septemberMatches))
+    septemberSum = sumByMonth(Trade.objects.filter(user=request.user,match_id__in=septemberMatches))
 
     octoberMatches = Match.objects.filter(match_time__month=10).values('id')
-    octoberSum = sumByMonth(Trade.objects.filter(match_id__in=octoberMatches))
+    octoberSum = sumByMonth(Trade.objects.filter(user=request.user,match_id__in=octoberMatches))
 
     novemberMatches = Match.objects.filter(match_time__month=11).values('id')
-    novemberSum = sumByMonth(Trade.objects.filter(match_id__in=novemberMatches))
+    novemberSum = sumByMonth(Trade.objects.filter(user=request.user,match_id__in=novemberMatches))
 
     decemberMatches = Match.objects.filter(match_time__month=12).values('id')
-    decemberSum = sumByMonth(Trade.objects.filter(match_id__in=decemberMatches))
+    decemberSum = sumByMonth(Trade.objects.filter(user=request.user,match_id__in=decemberMatches))
 
     tradesByMonthCollection = [
          januarySum,
@@ -92,7 +93,9 @@ def index(request):
         totalOfYear = totalOfYear + trade.profitLoss
         totalInvestedYear = totalInvestedYear + trade.invested
 
-    totalROIOfYear = float((totalInvestedYear * 100) / totalOfYear)
+    totalROIOfYear = 0
+    if totalOfYear != 0:
+        totalROIOfYear = float((totalInvestedYear * 100) / totalOfYear)
 
     currentBank = Bank.objects.first()
     currentBank = currentBank.initialAmount + totalOfYear
