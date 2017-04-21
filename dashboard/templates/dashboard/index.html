@@ -28,17 +28,24 @@ Dashboard
     {% endif %}
     {% endif %}
 
-    {% if totalROIOfYear is not null %}
-    <h3 style="clear:left;">ROI of the year: {{ totalROIOfYear |floatformat:-2 }} %</h3>
+    {% if totalROIOfYear != none %}
+    <h3 style="clear:left;float:left">ROI of the year: </h3>
+    {% endif %}
+    {% if totalROIOfYear > 0 %}  <h3 style="float:left;color:green;">  {{ totalROIOfYear |floatformat:-2 }} %</h3>
     {% else %}
-    <h3 style="clear:left;">ROI of the month: {{ totalROIOfMonth }} %</h3>
+        {% if totalROIOfYear < 0 %}  <h3 style="float:left;color:red;">  {{ totalROIOfYear |floatformat:-2 }} %</h3>
+        {% endif %}
     {% endif %}
 
 </div>
 
-<canvas id="myChart" width="1200" height="400"></canvas>
+<div style="clear:left;float:left">
+<canvas id="myChart" width="700" height="400" style="float:left"></canvas>
+</div>
+<div style="float:left">
+<canvas id="pieChart" width="500" height="300"></canvas>
+</div>
 <script type="text/javascript">
-
 var ctx = document.getElementById("myChart");
 var myChart = Chart.Line(ctx, {
     type: 'line',
@@ -78,7 +85,24 @@ var myChart = Chart.Line(ctx, {
     }
 });
 
+</script>
 
+<script type="text/javascript">
+var ctx = document.getElementById("pieChart");
+var myPieChart = new Chart(ctx,{
+    type: 'pie',
+    data: {
+            labels: ["Greens", "Reds", "Nulls"],
+            datasets: [{
+                data: {{ percentGreensReds}},
+                backgroundColor: [
+                    "green",
+                    "red",
+                    "gray"
+                ],
+            }]
+    }
+});
 
 </script>
 

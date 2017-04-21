@@ -88,14 +88,38 @@ def index(request):
 
     totalOfYear = 0
     totalInvestedYear = 0
+    totalROIOfYear = 0
+    totalGreens = 0
+    totalReds = 0
+    totalNulls = 0
 
     for trade in allTrades:
         totalOfYear = totalOfYear + trade.profitLoss
         totalInvestedYear = totalInvestedYear + trade.invested
+        totalROIOfYear = totalROIOfYear + (trade.profitLoss * 100) / trade.invested
+        if trade.profitLoss > 0:
+            totalGreens = totalGreens + 1
+        else:
+            if trade.profitLoss < 0:
+                totalReds = totalReds + 1
+            else:
+                totalNulls = totalNulls + 1
 
-    totalROIOfYear = 0
-    if totalOfYear != 0:
-        totalROIOfYear = float((totalInvestedYear * 100) / totalOfYear)
+    totalNumberOfBets = allTrades.count()
+    print "First number is {} ".format(totalNumberOfBets)
+
+    if totalNumberOfBets > 0:
+        percentGreensReds = [
+            (totalGreens * 100)/totalNumberOfBets,
+            (totalReds * 100)/totalNumberOfBets,
+            (totalNulls * 100)/totalNumberOfBets,
+        ]
+    else:
+        percentGreensReds = [
+            0,
+            0,
+            0,
+        ]
 
     currentBank = Bank.objects.first()
     currentBank = currentBank.initialAmount + totalOfYear
@@ -105,8 +129,8 @@ def index(request):
         'totalROIOfYear': totalROIOfYear,
         'tradesByMonthCollection': tradesByMonthCollection,
         'currentBank': currentBank,
+        'percentGreensReds': percentGreensReds,
     }
-    # context = {'tradesByMonthCollection': tradesByMonthCollection}
 
     print(tradesByMonthCollection)
 

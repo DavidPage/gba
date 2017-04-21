@@ -43,8 +43,16 @@ Trades
 </div>
     <div style="    width: 100%;
     float: left;">
-    {% if totalROIOfYear != None %}
-        <h3 style="clear:left;">ROI of the year: {{ totalROIOfYear |floatformat:-2  }} %</h3>
+            {% if totalROIOfYear != none %}
+
+        <h3 style="clear:left;float:left">ROI of the year:</h3>
+        {%endif%}
+    {% if totalROIOfYear == 0 %}
+        <h3 style="float:left;">   {{ totalROIOfYear |floatformat:-2  }} %</h3>
+    {% else %}
+        {% if totalROIOfYear > 0 %}
+        <h3 style="float:left;color:green">   {{ totalROIOfYear |floatformat:-2  }} %</h3>
+        {% endif %}
     {% endif %}
 </div>
     <div style="    width: 100%;
@@ -73,7 +81,7 @@ Trades
             {%if totalROIOfMonth < 0 %}
                     <h3 style="float:left; color:red;"> {{ totalROIOfMonth }} %</h3>
             {% else %}
-                        <h3 style="float:left;" >{{ totalROIOfMonth }} %</h3>
+                        <h3 style="float:left;color:green;" >{{ totalROIOfMonth }} %</h3>
             {% endif %}
         {% endif %}
     {% endif %}

@@ -18,14 +18,12 @@ def trades(request):
 
     totalOfYear = 0
     totalInvestedYear = 0
+    totalROIOfYear = 0
 
     for trade in allTrades:
         totalOfYear = totalOfYear + trade.profitLoss
         totalInvestedYear = totalInvestedYear + trade.invested
-
-    totalROIOfYear = 0
-    if totalOfYear != 0:
-        totalROIOfYear = float((totalInvestedYear * 100) / totalOfYear)
+        totalROIOfYear = totalROIOfYear + (trade.profitLoss * 100) / trade.invested
 
     context = {'allTrades': allTrades, 'totalOfYear': totalOfYear, 'totalROIOfYear': totalROIOfYear}
     return render(request, 'trade/index.html', context)
@@ -35,15 +33,15 @@ def filterByMonth(request, id):
     print("id: " + id)
     allMonthlyMatches = Match.objects.filter(match_time__month = id).values('id')
     print(allMonthlyMatches)
-    #allTrades = Trade.objects.filter(user=request.user, match_id__in=allMonthlyMatches)
-    allTrades = Trade.objects.filter(match_id__in=allMonthlyMatches)
+    allTrades = Trade.objects.filter(user=request.user, match_id__in=allMonthlyMatches)
 
     totalOfMonth = 0
     totalROIOfMonth = 0
 
     for trade in allTrades:
         totalOfMonth = totalOfMonth + trade.profitLoss
-        totalROIOfMonth = totalROIOfMonth + trade.divide()
+        totalROIOfMonth = totalROIOfMonth + (trade.profitLoss * 100) / trade.invested
+
         print ("divide: " + str(trade.divide()))
 
     context = {'allTrades': allTrades, 'totalOfMonth': totalOfMonth, 'totalROIOfMonth': totalROIOfMonth}
